@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ludo King — Multiplayer</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎲</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Cinzel:wght@400;700;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAME ENTRY SCREEN -->
+<div id="screen-name" class="screen active">
+  <div class="glass-bg"></div>
+  <div class="name-content">
+    <div class="logo-wrap">
+      <h1 class="logo-title">🎲 LUDO KING 🎲</h1>
+      <p class="logo-sub">PREMIUM MULTIPLAYER</p>
+    </div>
+    <div class="glass-card name-card">
+      <div class="input-group">
+        <label>CHOOSE YOUR NICKNAME</label>
+        <input type="text" id="player-name" placeholder="Name..." maxlength="20" autocomplete="off">
+      </div>
+      <button class="btn btn-primary btn-wide" id="btn-next">START GAME →</button>
+    </div>
+    <div class="home-footer">
+      Premium Ludo Experience
+      <span class="siva-credit">Created with 🎲 by Siva</span>
+    </div>
+  </div>
+</div>
+
+<!-- ROOM DISCOVERY SCREEN -->
+<div id="screen-discovery" class="screen">
+  <div class="glass-bg"></div>
+  <div class="discovery-content">
+    <div class="discovery-header">
+      <div class="user-greeting">Welcome, <span id="display-user-name">Player</span>!</div>
+      <button class="btn btn-ghost btn-sm" id="btn-change-name">Edit Name</button>
+    </div>
+    
+    <div class="discovery-grid">
+      <div class="discovery-main">
+        <h2 class="section-title">🌐 Available Rooms</h2>
+        <div class="rooms-list-container">
+          <div id="rooms-list" class="rooms-list">
+            <div class="rooms-empty">Searching for nearby rooms...</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="discovery-sidebar">
+        <div class="glass-card create-card">
+          <h3 class="card-title">Create New</h3>
+          <p class="card-desc">Start a room — play with friends or bots!</p>
+          <div class="create-options">
+            <label class="option-label">Players</label>
+            <div class="player-count-selector" id="player-count-selector">
+              <button class="count-btn" data-count="2">2</button>
+              <button class="count-btn active" data-count="4">4</button>
+            </div>
+            <label class="option-label">Include Bots?</label>
+            <div class="bot-toggle-row">
+              <button class="toggle-btn active" id="bot-toggle-yes" data-bot="yes">🤖 Yes</button>
+              <button class="toggle-btn" id="bot-toggle-no" data-bot="no">👥 No</button>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-wide" id="btn-create">🏠 Host Room</button>
+        </div>
+        
+        <div class="glass-card join-card">
+          <h3 class="card-title">Direct Join</h3>
+          <div class="join-row">
+            <input type="text" id="room-code" placeholder="CODE" maxlength="6" class="code-input">
+            <button class="btn btn-secondary" id="btn-join">Join</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="home-footer">
+      Select a room to join or host a new one
+      <span class="siva-credit">Created with 🎲 by Siva</span>
+    </div>
+  </div>
+</div>
+
+<!-- LOBBY SCREEN -->
+<div id="screen-lobby" class="screen">
+  <div class="lobby-bg"></div>
+  <div class="lobby-content">
+    <h2 class="lobby-title">🎯 Game Lobby</h2>
+    <div class="room-code-display">
+      <span>Room Code:</span>
+      <strong id="lobby-room-id">------</strong>
+      <button class="btn-copy" id="btn-copy-code" title="Copy code">📋</button>
+    </div>
+    <div class="players-grid" id="lobby-players"></div>
+    <div class="lobby-status" id="lobby-status">Waiting for players...</div>
+    <div class="lobby-btns">
+      <button class="btn btn-primary" id="btn-start" style="display:none">▶ Start Game</button>
+      <button class="btn btn-ghost" id="btn-leave-lobby">← Leave</button>
+    </div>
+    <div class="home-footer">
+      <span class="siva-credit">Created with 🎲 by Siva</span>
+    </div>
+  </div>
+</div>
+
+<!-- GAME SCREEN -->
+<div id="screen-game" class="screen">
+  <div class="game-layout">
+    <!-- Left sidebar: players + chat -->
+    <div class="sidebar-left">
+      <div class="player-panels" id="player-panels"></div>
+      <div class="chat-box">
+        <div class="chat-title">💬 Chat</div>
+        <div class="chat-messages" id="chat-messages"></div>
+        <div class="chat-input-row">
+          <input type="text" id="chat-input" placeholder="Message..." maxlength="200">
+          <button id="btn-send-chat">➤</button>
+        </div>
+        <div class="emoji-bar">
+          <span class="emoji-btn" data-emoji="😂">😂</span>
+          <span class="emoji-btn" data-emoji="🎉">🎉</span>
+          <span class="emoji-btn" data-emoji="🔥">🔥</span>
+          <span class="emoji-btn" data-emoji="😤">😤</span>
+          <span class="emoji-btn" data-emoji="👏">👏</span>
+          <span class="emoji-btn" data-emoji="💀">💀</span>
+          <span class="emoji-btn" data-emoji="🏆">🏆</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center: board -->
+    <div class="board-area">
+      <div class="turn-banner" id="turn-banner">
+        <span id="turn-text">--'s Turn</span>
+        <div class="timer-bar-wrap"><div class="timer-bar" id="timer-bar"></div></div>
+      </div>
+      <canvas id="ludo-board" width="560" height="560"></canvas>
+      <div class="dice-area">
+        <div class="dice-container" id="dice-container">
+          <div class="dice" id="dice">🎲</div>
+        </div>
+        <button class="btn btn-roll" id="btn-roll">Roll Dice</button>
+      </div>
+    </div>
+
+    <!-- Right sidebar: game info -->
+    <div class="sidebar-right">
+      <div class="game-info-card">
+        <div class="info-title">🎮 Game</div>
+        <div id="game-info-content"></div>
+      </div>
+      <div class="game-log">
+        <div class="info-title">📋 Log</div>
+        <div class="log-messages" id="log-messages"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating emoji reactions -->
+  <div id="emoji-reactions"></div>
+  
+  <button id="btn-leave-game" class="btn-leave-game">QUIT GAME</button>
+</div>
+
+<!-- WINNER SCREEN -->
+<div id="screen-winner" class="screen">
+  <div class="winner-bg"></div>
+  <div class="winner-content">
+    <div class="trophy-wrap">🏆</div>
+    <h2 class="winner-title" id="winner-title">WINNER!</h2>
+    <div class="winner-name" id="winner-name"></div>
+    <div class="rankings-list" id="rankings-list"></div>
+    <div class="winner-btns">
+      <button class="btn btn-primary" id="btn-restart">🔄 Play Again</button>
+      <button class="btn btn-ghost" id="btn-home">🏠 Home</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast notification -->
+<div id="toast" class="toast"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
