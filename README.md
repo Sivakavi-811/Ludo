@@ -4,7 +4,7 @@ A **real-time multiplayer Ludo game** built using modern web technologies. This 
 
 ## 🌐 Live Demo
 
-https://whiteyyxx.github.io/Password-Strength-Analyzer/
+https://whiteyyxx.github.io/Ludo/
 
 ---
 
