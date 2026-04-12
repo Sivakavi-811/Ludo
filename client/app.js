@@ -14,16 +14,16 @@ const C = CELL_SIZE;
 const COLORS = ['red', 'blue', 'green', 'yellow'];
 
 const COLOR_MAP = {
-  red:    '#e83b3b',
-  blue:   '#3b6ae8',
-  green:  '#2ec060',
+  red: '#e83b3b',
+  blue: '#3b6ae8',
+  green: '#2ec060',
   yellow: '#e8c03b'
 };
 
 const COLOR_LIGHT = {
-  red:    '#ff8080',
-  blue:   '#80aaff',
-  green:  '#80e8a0',
+  red: '#ff8080',
+  blue: '#80aaff',
+  green: '#80e8a0',
   yellow: '#ffe080'
 };
 
@@ -31,41 +31,41 @@ const COLOR_LIGHT = {
 // Starting from red's entry (col=6, row=13 area), clockwise
 const TRACK_CELLS = [
   // Bottom arm left col
-  [6,13],[6,12],[6,11],[6,10],[6,9],
+  [6, 13], [6, 12], [6, 11], [6, 10], [6, 9],
   // Left arm bottom row
-  [5,8],[4,8],[3,8],[2,8],[1,8],[0,8],
-  [0,7],[0,6],
+  [5, 8], [4, 8], [3, 8], [2, 8], [1, 8], [0, 8],
+  [0, 7], [0, 6],
   // Left arm top row
-  [1,6],[2,6],[3,6],[4,6],[5,6],
+  [1, 6], [2, 6], [3, 6], [4, 6], [5, 6],
   // Top arm left col
-  [6,5],[6,4],[6,3],[6,2],[6,1],[6,0],
-  [7,0],[8,0],
+  [6, 5], [6, 4], [6, 3], [6, 2], [6, 1], [6, 0],
+  [7, 0], [8, 0],
   // Top arm right col
-  [8,1],[8,2],[8,3],[8,4],[8,5],
+  [8, 1], [8, 2], [8, 3], [8, 4], [8, 5],
   // Right arm top row
-  [9,6],[10,6],[11,6],[12,6],[13,6],[14,6],
-  [14,7],[14,8],
+  [9, 6], [10, 6], [11, 6], [12, 6], [13, 6], [14, 6],
+  [14, 7], [14, 8],
   // Right arm bottom row
-  [13,8],[12,8],[11,8],[10,8],[9,8],
+  [13, 8], [12, 8], [11, 8], [10, 8], [9, 8],
   // Bottom arm right col
-  [8,9],[8,10],[8,11],[8,12],[8,13],[8,14],
-  [7,14],[6,14]
+  [8, 9], [8, 10], [8, 11], [8, 12], [8, 13], [8, 14],
+  [7, 14], [6, 14]
 ];
 
 // Home column cells for each color (from entry toward home)
 const HOME_COLS = {
-  red:    [[7,13],[7,12],[7,11],[7,10],[7,9]],
-  green:  [[1,7],[2,7],[3,7],[4,7],[5,7]],
-  yellow: [[7,1],[7,2],[7,3],[7,4],[7,5]],
-  blue:   [[13,7],[12,7],[11,7],[10,7],[9,7]]
+  red: [[7, 13], [7, 12], [7, 11], [7, 10], [7, 9]],
+  green: [[1, 7], [2, 7], [3, 7], [4, 7], [5, 7]],
+  yellow: [[7, 1], [7, 2], [7, 3], [7, 4], [7, 5]],
+  blue: [[13, 7], [12, 7], [11, 7], [10, 7], [9, 7]]
 };
 
 // Base positions for each color (2x2 grid of tokens in base)
 const BASE_TOKEN_POSITIONS = {
-  red:    [[1.5,10.5],[3.5,10.5],[1.5,12.5],[3.5,12.5]],
-  blue:   [[10.5,1.5],[12.5,1.5],[10.5,3.5],[12.5,3.5]],
-  green:  [[10.5,10.5],[12.5,10.5],[10.5,12.5],[12.5,12.5]],
-  yellow: [[1.5,1.5],[3.5,1.5],[1.5,3.5],[3.5,3.5]]
+  red: [[1.5, 10.5], [3.5, 10.5], [1.5, 12.5], [3.5, 12.5]],
+  blue: [[10.5, 1.5], [12.5, 1.5], [10.5, 3.5], [12.5, 3.5]],
+  green: [[10.5, 10.5], [12.5, 10.5], [10.5, 12.5], [12.5, 12.5]],
+  yellow: [[1.5, 1.5], [3.5, 1.5], [1.5, 3.5], [3.5, 3.5]]
 };
 
 // Home center piece
@@ -94,7 +94,7 @@ window.addEventListener('DOMContentLoaded', () => {
   canvas = document.getElementById('ludo-board');
   ctx = canvas.getContext('2d');
 
-  socket = io();
+  socket = io("https://ludo-9dtp.onrender.com");
   setupSocketEvents();
   setupUIEvents();
   drawBoard(null);
@@ -108,7 +108,7 @@ function setupUIEvents() {
   document.getElementById('btn-next').addEventListener('click', () => {
     const name = document.getElementById('player-name').value.trim();
     if (!name || name.length < 2) return showToast('Enter a name (2+ chars)', 'error');
-    
+
     // Store temporarily in a JS variable instead of localStorage
     window.currentPlayerName = name;
     document.getElementById('display-user-name').textContent = name;
@@ -186,7 +186,7 @@ function setupUIEvents() {
   document.getElementById('btn-leave-game').addEventListener('click', () => {
     if (confirm('Are you sure you want to quit the game?')) {
       socket.emit('leave_room');
-      location.reload(); 
+      location.reload();
     }
   });
 
@@ -259,7 +259,7 @@ function setupSocketEvents() {
 
   socket.on('player_joined', ({ room }) => {
     renderLobby(room);
-    showToast(`${room.players[room.players.length-1].name} joined!`);
+    showToast(`${room.players[room.players.length - 1].name} joined!`);
   });
 
   socket.on('player_disconnected', ({ name }) => {
@@ -424,8 +424,8 @@ function renderLobby(room) {
   const count = room.players.length;
   document.getElementById('lobby-status').textContent =
     count < 2 ? `Need ${2 - count} more player(s)` :
-    count < 4 ? `${count} players — Host can start` :
-    'Room full — Starting soon!';
+      count < 4 ? `${count} players — Host can start` :
+        'Room full — Starting soon!';
 }
 
 // =====================================================================
@@ -450,7 +450,7 @@ function renderGameUI() {
         <div class="panel-name">${nameLabel}</div>
         <div class="panel-tokens">🏠${homeCount} 🎯${onBoard}</div>
       </div>
-      ${p.finished ? '<div class="panel-badge">#'+p.rank+'</div>' : ''}
+      ${p.finished ? '<div class="panel-badge">#' + p.rank + '</div>' : ''}
       ${gameState.currentTurn === p.color ? '<div class="panel-badge">TURN</div>' : ''}
     `;
     panels.appendChild(div);
@@ -475,7 +475,7 @@ function renderGameUI() {
 
   // Dice display
   const diceEl = document.getElementById('dice');
-  const faces = ['', '1️⃣','2️⃣','3️⃣','4️⃣','5️⃣','6️⃣'];
+  const faces = ['', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣'];
   if (gameState.diceValue) {
     diceEl.textContent = faces[gameState.diceValue] || gameState.diceValue;
   } else {
@@ -531,7 +531,7 @@ function onBoardClick(e) {
     const pos = getTokenCanvasPos(myColor, token.position, move.tokenIndex);
     const dx = mx - pos.x;
     const dy = my - pos.y;
-    if (Math.sqrt(dx*dx + dy*dy) < C * 0.7) {
+    if (Math.sqrt(dx * dx + dy * dy) < C * 0.7) {
       socket.emit('move_token', { tokenIndex: move.tokenIndex });
       return;
     }
@@ -558,28 +558,28 @@ function drawBoardBase() {
 
   // Draw the 4 colored quadrants (base areas)
   const bases = [
-    { color: '#e83b3b', x: 0,        y: 9*C,      label: 'RED' },     // Bottom-Left
-    { color: '#2ec060', x: 0,        y: 0,        label: 'GREEN' },   // Top-Left
-    { color: '#e8c03b', x: 9*C,      y: 0,        label: 'YELLOW' },  // Top-Right
-    { color: '#3b6ae8', x: 9*C,      y: 9*C,      label: 'BLUE' }     // Bottom-Right
+    { color: '#e83b3b', x: 0, y: 9 * C, label: 'RED' },     // Bottom-Left
+    { color: '#2ec060', x: 0, y: 0, label: 'GREEN' },   // Top-Left
+    { color: '#e8c03b', x: 9 * C, y: 0, label: 'YELLOW' },  // Top-Right
+    { color: '#3b6ae8', x: 9 * C, y: 9 * C, label: 'BLUE' }     // Bottom-Right
   ];
 
   bases.forEach(b => {
     // Outer fill
     ctx.fillStyle = b.color + '22';
-    ctx.fillRect(b.x, b.y, 6*C, 6*C);
+    ctx.fillRect(b.x, b.y, 6 * C, 6 * C);
 
     // Border
     ctx.strokeStyle = b.color + '88';
     ctx.lineWidth = 2;
-    ctx.strokeRect(b.x + 1, b.y + 1, 6*C - 2, 6*C - 2);
+    ctx.strokeRect(b.x + 1, b.y + 1, 6 * C - 2, 6 * C - 2);
 
     // Inner base circle area
     ctx.fillStyle = b.color + '33';
-    const cx = b.x + 3*C;
-    const cy = b.y + 3*C;
+    const cx = b.x + 3 * C;
+    const cy = b.y + 3 * C;
     ctx.beginPath();
-    ctx.arc(cx, cy, 2.2*C, 0, Math.PI*2);
+    ctx.arc(cx, cy, 2.2 * C, 0, Math.PI * 2);
     ctx.fill();
     ctx.strokeStyle = b.color + '66';
     ctx.lineWidth = 2;
@@ -587,11 +587,11 @@ function drawBoardBase() {
 
     // Draw 4 empty token placeholders
     const offset = C * 1.25;
-    const slotRadius = C * 0.38; 
+    const slotRadius = C * 0.38;
     for (let i = 0; i < 4; i++) {
       const bx = [-offset, offset, -offset, offset][i];
       const by = [-offset, -offset, offset, offset][i];
-      
+
       ctx.beginPath();
       ctx.arc(cx + bx, cy + by, slotRadius + 2, 0, Math.PI * 2);
       ctx.fillStyle = b.color + '44';
@@ -608,10 +608,10 @@ function drawBoardBase() {
       const isTrack = isTrackCell(col, row);
       if (isTrack) {
         ctx.fillStyle = '#252540';
-        ctx.fillRect(col*C, row*C, C, C);
+        ctx.fillRect(col * C, row * C, C, C);
         ctx.strokeStyle = '#2e2e52';
         ctx.lineWidth = 0.5;
-        ctx.strokeRect(col*C, row*C, C, C);
+        ctx.strokeRect(col * C, row * C, C, C);
       }
     }
   }
@@ -619,31 +619,31 @@ function drawBoardBase() {
 
 
   // Home column coloring
-  HOME_COLS.red.forEach(([c,r], i) => {
-    if (i < 5) { ctx.fillStyle = '#e83b3b55'; ctx.fillRect(c*C, r*C, C, C); }
+  HOME_COLS.red.forEach(([c, r], i) => {
+    if (i < 5) { ctx.fillStyle = '#e83b3b55'; ctx.fillRect(c * C, r * C, C, C); }
   });
-  HOME_COLS.blue.forEach(([c,r], i) => {
-    if (i < 5) { ctx.fillStyle = '#3b6ae855'; ctx.fillRect(c*C, r*C, C, C); }
+  HOME_COLS.blue.forEach(([c, r], i) => {
+    if (i < 5) { ctx.fillStyle = '#3b6ae855'; ctx.fillRect(c * C, r * C, C, C); }
   });
-  HOME_COLS.green.forEach(([c,r], i) => {
-    if (i < 5) { ctx.fillStyle = '#2ec06055'; ctx.fillRect(c*C, r*C, C, C); }
+  HOME_COLS.green.forEach(([c, r], i) => {
+    if (i < 5) { ctx.fillStyle = '#2ec06055'; ctx.fillRect(c * C, r * C, C, C); }
   });
-  HOME_COLS.yellow.forEach(([c,r], i) => {
-    if (i < 5) { ctx.fillStyle = '#e8c03b55'; ctx.fillRect(c*C, r*C, C, C); }
+  HOME_COLS.yellow.forEach(([c, r], i) => {
+    if (i < 5) { ctx.fillStyle = '#e8c03b55'; ctx.fillRect(c * C, r * C, C, C); }
   });
 
   // Safe cell stars
   TRACK_CELLS.forEach(([c, r], idx) => {
     if (SAFE_INDICES.has(idx)) {
       ctx.fillStyle = '#ffffff20';
-      ctx.fillRect(c*C, r*C, C, C);
-      drawStar(c*C + C/2, r*C + C/2, C*0.3, '#ffffff55');
+      ctx.fillRect(c * C, r * C, C, C);
+      drawStar(c * C + C / 2, r * C + C / 2, C * 0.3, '#ffffff55');
     }
   });
 
   // Starting cells
   const startCells = [
-    { idx: 0,  color: '#e83b3b' }, // red
+    { idx: 0, color: '#e83b3b' }, // red
     { idx: 13, color: '#2ec060' }, // green
     { idx: 26, color: '#e8c03b' }, // yellow
     { idx: 39, color: '#3b6ae8' }  // blue
@@ -651,7 +651,7 @@ function drawBoardBase() {
   startCells.forEach(sc => {
     const [c, r] = TRACK_CELLS[sc.idx];
     ctx.fillStyle = sc.color + '80';
-    ctx.fillRect(c*C+1, r*C+1, C-2, C-2);
+    ctx.fillRect(c * C + 1, r * C + 1, C - 2, C - 2);
   });
 
   // Center home triangle
@@ -665,10 +665,10 @@ function drawCenterHome() {
 
   // Draw 4 triangles pointing to center
   const triangles = [
-    { color: '#e83b3b', points: [[cx-s, cy+s],[cx+s,cy+s],[cx,cy]] }, // Red (bottom pointing up)
-    { color: '#3b6ae8', points: [[cx+s,cy-s],[cx+s,cy+s],[cx,cy]] },  // Blue (right pointing left)
-    { color: '#e8c03b', points: [[cx-s,cy-s],[cx+s,cy-s],[cx,cy]] },  // Yellow (top pointing down)
-    { color: '#2ec060', points: [[cx-s,cy-s],[cx-s,cy+s],[cx,cy]] }   // Green (left pointing right)
+    { color: '#e83b3b', points: [[cx - s, cy + s], [cx + s, cy + s], [cx, cy]] }, // Red (bottom pointing up)
+    { color: '#3b6ae8', points: [[cx + s, cy - s], [cx + s, cy + s], [cx, cy]] },  // Blue (right pointing left)
+    { color: '#e8c03b', points: [[cx - s, cy - s], [cx + s, cy - s], [cx, cy]] },  // Yellow (top pointing down)
+    { color: '#2ec060', points: [[cx - s, cy - s], [cx - s, cy + s], [cx, cy]] }   // Green (left pointing right)
   ];
 
   triangles.forEach(tri => {
@@ -682,7 +682,7 @@ function drawCenterHome() {
 
   // Center star
   ctx.beginPath();
-  ctx.arc(cx, cy, C * 0.3, 0, Math.PI*2);
+  ctx.arc(cx, cy, C * 0.3, 0, Math.PI * 2);
   ctx.fillStyle = '#0d0d1a';
   ctx.fill();
   ctx.strokeStyle = '#f0c040';
@@ -709,11 +709,11 @@ function drawStar(x, y, r, color) {
   ctx.fillStyle = color;
   ctx.beginPath();
   for (let i = 0; i < 5; i++) {
-    const a = (i * 4 * Math.PI / 5) - Math.PI/2;
-    const ai = ((i * 4 + 2) * Math.PI / 5) - Math.PI/2;
+    const a = (i * 4 * Math.PI / 5) - Math.PI / 2;
+    const ai = ((i * 4 + 2) * Math.PI / 5) - Math.PI / 2;
     if (i === 0) ctx.moveTo(x + r * Math.cos(a), y + r * Math.sin(a));
     else ctx.lineTo(x + r * Math.cos(a), y + r * Math.sin(a));
-    ctx.lineTo(x + r*0.4 * Math.cos(ai), y + r*0.4 * Math.sin(ai));
+    ctx.lineTo(x + r * 0.4 * Math.cos(ai), y + r * 0.4 * Math.sin(ai));
   }
   ctx.closePath();
   ctx.fill();
@@ -737,7 +737,7 @@ function getTokenCanvasPos(color, position, tokenIndex) {
     // Home
     const cx = 7.5 * C;
     const cy = 7.5 * C;
-    const offsets = [[-0.3,-0.3],[0.3,-0.3],[-0.3,0.3],[0.3,0.3]];
+    const offsets = [[-0.3, -0.3], [0.3, -0.3], [-0.3, 0.3], [0.3, 0.3]];
     return {
       x: cx + offsets[tokenIndex][0] * C,
       y: cy + offsets[tokenIndex][1] * C
@@ -783,7 +783,7 @@ function drawTokens(gs) {
       const grad = ctx.createRadialGradient(pos.x - 4, pos.y - 4, 1, pos.x, pos.y, tokenRadius);
       grad.addColorStop(0, COLOR_LIGHT[color]);
       grad.addColorStop(1, COLOR_MAP[color]);
-      
+
       ctx.beginPath();
       ctx.arc(pos.x, pos.y, tokenRadius, 0, Math.PI * 2);
       ctx.fillStyle = grad;
@@ -820,18 +820,18 @@ function animateStep(color, tokenIndex, targetPos) {
     const startPos = gameState.tokens[color][tokenIndex].position;
     const startCoord = getTokenCanvasPos(color, startPos, tokenIndex);
     const endCoord = getTokenCanvasPos(color, targetPos, tokenIndex);
-    
+
     let startTime = null;
     const duration = 250; // ms per step
 
     function step(timestamp) {
       if (!startTime) startTime = timestamp;
       const progress = Math.min((timestamp - startTime) / duration, 1);
-      
+
       // Jump arc (sine wave)
       const jumpHeight = C * 0.8;
       const currentJump = Math.sin(progress * Math.PI) * jumpHeight;
-      
+
       // Linear interpolation for X, Y
       const currentX = startCoord.x + (endCoord.x - startCoord.x) * progress;
       const currentY = startCoord.y + (endCoord.y - startCoord.y) * progress - currentJump;
@@ -839,9 +839,9 @@ function animateStep(color, tokenIndex, targetPos) {
       // Temporary state for drawing
       const tempTokens = JSON.parse(JSON.stringify(gameState.tokens));
       tempTokens[color][tokenIndex].position = -99; // Hide original
-      
+
       drawBoard({ ...gameState, tokens: tempTokens });
-      
+
       // Draw flying token
       drawSingleToken(color, tokenIndex, { x: currentX, y: currentY });
 
@@ -859,7 +859,7 @@ function animateStep(color, tokenIndex, targetPos) {
 
 function drawSingleToken(color, tokenIndex, pos) {
   const tokenRadius = C * 0.42; // Slightly larger when jumping
-  
+
   // Shadow
   ctx.beginPath();
   ctx.arc(pos.x + 6, pos.y + 10, tokenRadius, 0, Math.PI * 2);
@@ -874,7 +874,7 @@ function drawSingleToken(color, tokenIndex, pos) {
   const grad = ctx.createRadialGradient(pos.x - 4, pos.y - 4, 1, pos.x, pos.y, tokenRadius);
   grad.addColorStop(0, COLOR_LIGHT[color]);
   grad.addColorStop(1, COLOR_MAP[color]);
-  
+
   ctx.beginPath();
   ctx.arc(pos.x, pos.y, tokenRadius, 0, Math.PI * 2);
   ctx.fillStyle = grad;
@@ -920,7 +920,7 @@ function animateDice(value) {
   dice.classList.remove('rolling');
   void dice.offsetWidth; // reflow
   dice.classList.add('rolling');
-  const faces = ['', '1️⃣','2️⃣','3️⃣','4️⃣','5️⃣','6️⃣'];
+  const faces = ['', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣'];
   setTimeout(() => {
     dice.classList.remove('rolling');
     dice.textContent = faces[value] || value;
@@ -934,7 +934,7 @@ function addChatMessage(name, color, message) {
   const el = document.getElementById('chat-messages');
   const div = document.createElement('div');
   div.className = 'chat-msg';
-  div.innerHTML = `<span class="msg-name" style="color:${COLOR_LIGHT[color]||'#ccc'}">${escHtml(name)}:</span>${escHtml(message)}`;
+  div.innerHTML = `<span class="msg-name" style="color:${COLOR_LIGHT[color] || '#ccc'}">${escHtml(name)}:</span>${escHtml(message)}`;
   el.appendChild(div);
   el.scrollTop = el.scrollHeight;
 }
@@ -968,7 +968,7 @@ function showWinnerScreen(rankings) {
     div.className = 'ranking-row';
     div.innerHTML = `
       <div class="rank-num ${medals[i]}">#${r.rank}</div>
-      <div class="rank-color" style="background:${COLOR_MAP[r.color]||'#ccc'}"></div>
+      <div class="rank-color" style="background:${COLOR_MAP[r.color] || '#ccc'}"></div>
       <div class="rank-name">${escHtml(r.name)}</div>
     `;
     list.appendChild(div);
@@ -1001,9 +1001,9 @@ function showToast(msg, type = '') {
 }
 
 function capColor(c) {
-  return `<span style="color:${COLOR_LIGHT[c]||'#ccc'};font-weight:700">${c.charAt(0).toUpperCase()+c.slice(1)}</span>`;
+  return `<span style="color:${COLOR_LIGHT[c] || '#ccc'};font-weight:700">${c.charAt(0).toUpperCase() + c.slice(1)}</span>`;
 }
 
 function escHtml(str) {
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
