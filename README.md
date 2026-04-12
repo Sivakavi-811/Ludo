@@ -1,74 +1,166 @@
-# 🎲 Ludo King — Multiplayer
+# 🎲 Multiplayer Ludo Game
 
-A production-quality real-time multiplayer Ludo game built with Node.js, Express, Socket.IO, and Vanilla JS.
+A **real-time multiplayer Ludo game** built using modern web technologies. This project replicates the classic Ludo gameplay with accurate rules, smooth UI, and live synchronization using WebSockets.
 
-## Features
+---
 
-- 🎮 2–4 player real-time multiplayer
-- 🔒 Server-authoritative game logic (no cheating)
-- 💬 Real-time chat + emoji reactions
-- ⏱️ 25-second turn timer with auto-skip
-- 🎯 Full Ludo rules: captures, safe cells, home column, exact home entry
-- 🏆 Rankings & winner screen
-- 📱 Responsive design (mobile + desktop)
+## 🚀 Features
 
-## Setup & Run Locally
+* 🔥 Real-time multiplayer gameplay (Socket.IO)
+* 👥 Supports 2–4 players
+* 🤖 Optional bot players (single-player / mixed mode)
+* 🎲 Dice roll system with animation
+* 🔄 Turn-based gameplay with extra turn on rolling 6
+* 🎯 Accurate Ludo rules:
 
-```bash
-# 1. Install dependencies
-npm install
+  * Start only on 6
+  * Token capture (kill opponent)
+  * Safe zones
+  * Exact entry to home
+* 🌐 Live synchronization across all players
+* 💬 In-game chat system (optional)
+* 🏆 Winner detection & restart option
+* 📱 Responsive UI (mobile + desktop)
 
-# 2. Start server
-npm start
-# OR for development with auto-reload:
-npm run dev
+---
 
-# 3. Open browser
-# http://localhost:3000
-```
+## 🛠 Tech Stack
 
-## How to Play
+* **Frontend:** HTML, CSS, JavaScript
+* **Backend:** Node.js, Express.js
+* **Real-time Communication:** Socket.IO
 
-1. Enter your name on the home screen
-2. Click **Create Room** to host, or enter a code and **Join**
-3. Share the 6-character room code with friends
-4. Host clicks **Start Game** (min 2 players required)
-5. Click **Roll Dice** on your turn, then click a highlighted token to move it
+---
 
-## Game Rules
-
-- Roll a **6** to bring a token out of base
-- Rolling a 6 gives you an extra turn
-- Land on an opponent = capture (send them back to base)
-- Capturing also gives an extra turn
-- **Starred cells** are safe — no captures there
-- Enter the home column and reach position 6 with an exact roll
-- First to get all 4 tokens home wins!
-
-## Deployment
-
-### Backend (Render/Railway)
-1. Push to GitHub
-2. Create new Web Service on [render.com](https://render.com)
-3. Set build command: `npm install`
-4. Set start command: `npm start`
-5. Add env var: `PORT=10000`
-
-### Frontend
-The frontend is served by the same Express server — no separate deployment needed.
-
-## Project Structure
+## 📂 Project Structure
 
 ```
 ludo-multiplayer/
+│
 ├── client/
-│   ├── index.html    # All screens (Home, Lobby, Game, Winner)
-│   ├── style.css     # Dark theme, animations
-│   └── app.js        # Board rendering, socket client
+│   ├── index.html
+│   ├── style.css
+│   ├── app.js
+│
 ├── server/
-│   ├── server.js         # Express + Socket.IO setup
-│   ├── gameLogic.js      # Rules engine (authoritative)
-│   └── socketHandler.js  # All real-time event handling
+│   ├── server.js
+│   ├── gameLogic.js
+│   ├── socketHandler.js
+│
 ├── package.json
 └── README.md
 ```
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1️⃣ Clone the repository
+
+```bash
+git clone https://github.com/your-username/ludo-multiplayer.git
+cd ludo-multiplayer
+```
+
+### 2️⃣ Install dependencies
+
+```bash
+npm install
+```
+
+### 3️⃣ Run the server
+
+```bash
+node server.js
+```
+
+### 4️⃣ Open in browser
+
+```
+http://localhost:3000
+```
+
+---
+
+## 🌐 Deployment
+
+### Frontend
+
+* Deploy using GitHub Pages
+
+### Backend
+
+* Deploy using:
+
+  * Render
+  * Railway
+
+> ⚠️ Note: Update Socket.IO URL in frontend after deployment
+
+---
+
+## 🎮 How to Play
+
+1. Create or join a room
+2. Select number of players (2–4)
+3. Enable bot if needed
+4. Roll the dice 🎲
+5. Move tokens according to rules
+6. First player to reach home with all tokens wins 🏆
+
+---
+
+## 🤖 Bot Logic
+
+* Automatically fills empty player slots
+* Follows Ludo rules
+* Basic AI:
+
+  * Prioritizes killing opponents
+  * Moves tokens closer to home
+  * Uses 6 to unlock tokens
+
+---
+
+## 🔒 Game Logic Highlights
+
+* Server-side validation (prevents cheating)
+* Shared global path system (52 cells)
+* Color-based start positions
+* Real-time state synchronization
+
+---
+
+
+## 📸 Screenshots
+<img width="1853" height="846" alt="image" src="https://github.com/user-attachments/assets/040abb75-e75f-4f72-9865-b4251972914f" />
+
+<img width="1839" height="829" alt="image" src="https://github.com/user-attachments/assets/7980a279-2d8c-4812-a3aa-6001af57a157" />
+
+---
+
+## 🚀 Future Improvements
+
+* 🎨 Enhanced UI/UX
+* 📊 Leaderboard system
+* 👤 Player authentication
+* 🌙 Dark mode
+* 🎵 Sound effects
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Feel free to fork this repo and submit a pull request.
+
+---
+
+## 📜 License
+
+This project is open-source and available under the MIT License.
+
+---
+
+## ⭐ Support
+
+If you like this project, give it a ⭐ on GitHub!
