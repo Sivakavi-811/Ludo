@@ -2,6 +2,10 @@
 
 A **real-time multiplayer Ludo game** built using modern web technologies. This project replicates the classic Ludo gameplay with accurate rules, smooth UI, and live synchronization using WebSockets.
 
+## 🌐 Live Demo
+
+https://whiteyyxx.github.io/Password-Strength-Analyzer/
+
 ---
 
 ## 🚀 Features
