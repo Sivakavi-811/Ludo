@@ -18,7 +18,7 @@ A **real-time multiplayer Ludo game** built using modern web technologies. This 
   * Safe zones
   * Exact entry to home
 * 🌐 Live synchronization across all players
-* 💬 In-game chat system (optional)
+* 💬 In-game chat system 
 * 🏆 Winner detection & restart option
 * 📱 Responsive UI (mobile + desktop)
 
