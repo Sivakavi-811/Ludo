@@ -1,6 +1,6 @@
 # 🎲 Multiplayer Ludo Game
 
-# 🌐 Live Demo https://whiteyyxx.github.io/Ludo/
+# 🌐 Live Demo https://Sivakavi-811.github.io/Ludo/
 
 A **real-time multiplayer Ludo game** built using modern web technologies. This project replicates the classic Ludo gameplay with accurate rules, smooth UI, and live synchronization using WebSockets.
 
